@@ -12,9 +12,12 @@ else:
     print("あなたは高齢者です")
 
 ```
+
+if文の他に三項演算子でも書ける
 ## 条件付き三項演算子
+
 公式
-``` python
+``` javascript
 op1 ? op2 : op3
 ```
 
@@ -24,3 +27,21 @@ const age = 20;
 const result = age >= 20 ? "成人です" : "未成年です";
 console.log(result); // "成人です"
 ```
+# for文
+公式
+``` python
+for(初期化; 条件; ループの最後に評価される式){
+   ステートメント
+}
+```
+
+# while文
+for文の他にwhile文を使い反復することができる
+
+```python
+    while(i){
+        処理
+    }
+```
+# break continue
+制御フローで breakが処理されると、反復ループから抜け出すことができ、continueを実行するとループは次のループに進む
