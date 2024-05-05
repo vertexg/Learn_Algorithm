@@ -35,9 +35,29 @@ class Deck:
             self.deck[i] = self.deck[j]
             self.deck[j] = temp
 
-card  = Deck()
-card.printDeck()
+    def draw(self):
+        return self.deck.pop()
+class Dealer:
 
-card.shuffleDeck()
-card.printDeck()
+    @staticmethod
+    def Game(amountOfPlayers):
+        table = {
+            "players": [],
+            "deck": Deck()
+        }
 
+        table["deck"].shuffleDeck()
+
+        for person in range(0, amountOfPlayers):
+            # プレーヤの手札
+            playerCard = []
+            for i in range (0, 2):
+                playerCard.append(table["deck"].draw())
+            table["players"].append(playerCard)
+
+        return table["players"]
+
+table1 = Dealer.Game(2)
+
+for i in range (0,2):
+    print(table1[0][i].getCardString())
