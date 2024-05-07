@@ -40,10 +40,11 @@ class Deck:
 class Dealer:
 
     @staticmethod
-    def Game(amountOfPlayers):
+    def startGmae (amountOfPlayers, gamemode):
         table = {
             "players": [],
-            "deck": Deck()
+            "gamemod":gamemode,
+            "deck": Deck(),
         }
 
         table["deck"].shuffleDeck()
@@ -51,13 +52,48 @@ class Dealer:
         for person in range(0, amountOfPlayers):
             # プレーヤの手札
             playerCard = []
-            for i in range (0, 2):
+            for i in range (0, Dealer.initialCards(gamemode)):
                 playerCard.append(table["deck"].draw())
             table["players"].append(playerCard)
 
-        return table["players"]
+        return table
+    @staticmethod
+    def initialCards(gamemode):
+       if gamemode == "21":
+          return 2
+       if gamemode == "poker":
+          return 5
+    @staticmethod
+    def printTableInformation(table):
+       print("Amount of players: " + str(len(table["players"])) + "... Game mode: " + table["gamemod"] + ". At this table: ")
 
-table1 = Dealer.Game(2)
+       for i, player in enumerate(table["players"]):
+         print(str(i + 1) + "player cards")
+         for card in player:
+            print(card.getCardString())
+    @staticmethod
+    def score21Individual(cards):
+          vaule = 0
+          for card in cards:
+              vaule += card.intValue
+          return vaule if 21 >= vaule >= 1 else 0
 
-for i in range (0,2):
-    print(table1[0][i].getCardString())
+class HelperFunctions:
+
+    @staticmethod
+    def maxInArrayIndex(intArr):
+       maxNum = 0
+       maxIndex = intArr[0]
+       for i,n in  enumerate(intArr):
+          if n > maxIndex:
+             maxIndex = i
+             maxNum += i
+       return maxIndex
+
+# 最大値は19(= index 2)
+arr1 = [1, 9, 19, 3, 4, 6]
+print(HelperFunctions.maxInArrayIndex(arr1))
+
+# 最大値は5(= index 0)
+arr2 = [5, 2, 1, 3, 5, 5]
+print(HelperFunctions.maxInArrayIndex(arr2))
