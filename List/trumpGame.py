@@ -78,22 +78,43 @@ class Dealer:
               vaule += card.intValue
           return vaule if 21 >= vaule >= 1 else 0
 
+ @staticmethod
+  
+    def winnerOf21(table):
+        points = []
+        cache = {}
+        for cards in table["players"]:
+            point = Dealer.score21Individual(cards)
+            # pointを配列に保存
+            points.append(point)
+            if point in cache:
+                cache[point] += 1
+            else:
+                cache[point] = 1
+
+        print(points)
+
+        winnerIndex = HelperFunctions.maxInArrayIndex(points)
+        if cache[points[winnerIndex]] > 1:
+            return "It is a draw"
+        elif cache[points[winnerIndex]] >= 0:
+            return "player " + str(winnerIndex + 1) + " is the winner"
+        else:
+            return "No winners.."
+
 class HelperFunctions:
 
     @staticmethod
     def maxInArrayIndex(intArr):
-       maxNum = 0
-       maxIndex = intArr[0]
-       for i,n in  enumerate(intArr):
-          if n > maxIndex:
-             maxIndex = i
-             maxNum += i
-       return maxIndex
+        maxIndex = 0
+        maxValue = intArr[0]
+        for i, num in enumerate(intArr):
+            if num > maxValue:
+                maxValue = num
+                maxIndex = i
 
-# 最大値は19(= index 2)
-arr1 = [1, 9, 19, 3, 4, 6]
-print(HelperFunctions.maxInArrayIndex(arr1))
+        return maxIndex
 
-# 最大値は5(= index 0)
-arr2 = [5, 2, 1, 3, 5, 5]
-print(HelperFunctions.maxInArrayIndex(arr2))
+table = Dealer.startGame(4, "21")
+Dealer.printTableInformation(table)
+print(Dealer.winnerOf21(table))
